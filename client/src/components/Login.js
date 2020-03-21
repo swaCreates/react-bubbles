@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 import {axiosWithAuth} from '../utils/axiosWithAuth';
 
-const Login = () => {
+const Login = props => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
 
@@ -27,6 +27,8 @@ const Login = () => {
     .then(res => {
       console.log(res)
       window.localStorage.setItem('token', res.data.payload);
+
+      props.history.push('/bubbles-page');
     })
     .catch(err => console.log('This is my error: ', err));
 
@@ -44,7 +46,7 @@ const Login = () => {
          value={info.username}
         />
         <input 
-         type='text'
+         type='password'
          onChange={handleChanges}
          placeholder='password'
          name='password'
