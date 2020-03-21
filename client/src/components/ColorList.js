@@ -24,9 +24,22 @@ const ColorList = ({ colors, updateColors }) => {
     // where is is saved right now?
 
     axiosWithAuth()
+
+    // the state of colors from colors(BubblePage) were being held in
+    // colorToEdit, therefore using the id of colorToEdit to match the 
+    // colors list.
+
     .put(`/api/colors/${colorToEdit.id}`, color)
     .then(() => {
       // console.log(res);
+
+      // inside of the put/then method you want to recall axios
+      // to re-render the page to refresh the new data, that you
+      // put/edited to the back end/database
+
+      // also below on the saveEdit call on the onSubmit method of form
+      // I needed to change the format and make sure I passed the 
+      // arguments of the (e, color) param. * LINE 102 *
 
       axiosWithAuth()
       .get('http://localhost:5000/api/colors')
@@ -40,10 +53,17 @@ const ColorList = ({ colors, updateColors }) => {
 
   const deleteColor = color => {
     // make a delete request to delete this color
+
+    // to make the backend/database delete, I needed to reference the id
+    // of the item I was deleting to make everything match * LINE 87 *
+
     axiosWithAuth()
     .delete(`/api/colors/${color.id}`)
     .then(() => {
       // console.log(res);
+
+      // recall axios, to re-render the new data,
+      // especially that which has been now deleted
 
       axiosWithAuth()
       .get('http://localhost:5000/api/colors')
